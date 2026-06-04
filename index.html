@@ -448,6 +448,61 @@
       text-underline-offset: 3px;
     }
 
+    /* ── BOTÓN FLOTANTE SCROLL ── */
+    .scroll-hint {
+      position: fixed;
+      bottom: 1.75rem;
+      left: 50%;
+      translate: -50% 0;
+      z-index: 99;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      animation: bounceDown 2s ease-in-out infinite;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    @media (max-width: 640px) {
+      .scroll-hint { display: flex; }
+    }
+
+    .scroll-hint-ring {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 0 6px rgba(201,169,110,.15);
+    }
+
+    .scroll-hint-ring i {
+      font-size: 18px;
+      color: var(--bg);
+    }
+
+    .scroll-hint-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 300;
+      opacity: .7;
+    }
+
+    .scroll-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(6px); }
+    }
+
     /* ── ANIMACIONES ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
@@ -466,7 +521,7 @@
 
   <!-- ── RETRATO ── -->
   <div class="portrait-wrap">
-      <img class="portrait-img" src="https://andresaromeroa.github.io/fiesta-laura-mar/honita-41.webp" alt="Laura" />
+    <img class="portrait-img" src="https://andresaromeroa.github.io/fiesta-laura-mar/honita-41.webp" alt="Laura" />
     <div class="portrait-fade"></div>
   </div>
 
@@ -712,6 +767,22 @@
           alert('Error de conexión. Intenta de nuevo.');
         });
     }
+  </script>
+  <!-- ── BOTÓN FLOTANTE SCROLL (solo móvil) ── -->
+  <button class="scroll-hint" id="scrollHint" onclick="document.querySelector('.content').scrollIntoView({behavior:'smooth'})" aria-label="Desliza hacia abajo">
+    <div class="scroll-hint-ring">
+      <i class="ti ti-chevron-down" aria-hidden="true"></i>
+    </div>
+    <span class="scroll-hint-label">ver más</span>
+  </button>
+
+  <script>
+    // Ocultar el botón cuando el usuario empieza a hacer scroll
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('scrollHint');
+      if (window.scrollY > 80) btn.classList.add('hidden');
+      else btn.classList.remove('hidden');
+    }, { passive: true });
   </script>
 </body>
 </html>
