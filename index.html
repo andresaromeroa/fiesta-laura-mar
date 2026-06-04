@@ -92,6 +92,16 @@
       margin: 0 auto;
     }
 
+    /* En móvil: el "Ya pasó." sube encima de la imagen */
+    @media (max-width: 640px) {
+      .hero {
+        margin-top: -4.5rem;
+        padding-top: 0;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
     .ya-paso {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(56px, 16vw, 80px);
@@ -294,7 +304,7 @@
       border-radius: 2px;
       color: var(--text);
       font-family: 'Jost', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 300;
       padding: 10px 13px;
       outline: none;
@@ -513,7 +523,7 @@
 <body>
 
   <!-- ── BARRA SUPERIOR ── -->
-  <a class="banner-ausente" onclick="noAsistir()" href="#nota">
+  <a class="banner-ausente" onclick="noAsistir()" href="#">
     <i class="ti ti-heart" aria-hidden="true"></i>
     <span>¿No podrás venir? <strong>Déjale un mensaje a Laura</strong></span>
     <i class="ti ti-arrow-down" aria-hidden="true"></i>
@@ -530,7 +540,7 @@
     <div class="ya-paso">Ya pasó.</div>
     <div class="subtitle-hero">los cuarenta ya no están</div>
     <div class="divider"></div>
-    <div class="nombre">Laura</div>
+    <div class="nombre" id="nombre-laura">Laura</div>
     <div class="cumple-text">cumple</div>
     <div class="numero">41</div>
   </div>
@@ -666,7 +676,10 @@
       const sel = document.getElementById('asistentes');
       sel.value = 'no';
       onAsistentesChange();
-      // el scroll lo hace el href="#nota" del enlace
+      setTimeout(() => {
+        document.getElementById('nombre').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        document.getElementById('nombre').focus();
+      }, 100);
     }
 
     // Reacciona a cualquier cambio en el select de asistentes
@@ -743,23 +756,20 @@
       btn.textContent = 'Enviando...';
 
       const params = new URLSearchParams({ nombre, email, asistentes, nota });
-      fetch(APPS_SCRIPT_URL + '?' + params.toString())
-        .then(r => r.json())
-        .then(data => {
-          if (data.status === 'ok') {
-            document.getElementById('form-wrapper').style.display = 'none';
-            const success = document.getElementById('success');
-            if (noAsiste) {
-              document.getElementById('success-icon').textContent = '♡';
-              document.getElementById('success-text').innerHTML =
-                'Tu mensaje para Laura quedó guardado.<br>Se lo haremos llegar con mucho cariño.';
-            }
-            success.style.display = 'block';
-          } else {
-            btn.disabled = false;
-            btn.textContent = noAsiste ? 'Enviar mensaje' : 'Confirmar asistencia';
-            alert('Algo salió mal, intenta de nuevo.');
+      fetch(APPS_SCRIPT_URL + '?' + params.toString(), {
+        method: 'GET',
+        redirect: 'follow',
+        mode: 'no-cors'
+      })
+        .then(() => {
+          document.getElementById('form-wrapper').style.display = 'none';
+          const success = document.getElementById('success');
+          if (noAsiste) {
+            document.getElementById('success-icon').textContent = '♡';
+            document.getElementById('success-text').innerHTML =
+              'Tu mensaje para Laura quedó guardado.<br>Se lo haremos llegar con mucho cariño.';
           }
+          success.style.display = 'block';
         })
         .catch(() => {
           btn.disabled = false;
@@ -769,7 +779,7 @@
     }
   </script>
   <!-- ── BOTÓN FLOTANTE SCROLL (solo móvil) ── -->
-  <button class="scroll-hint" id="scrollHint" onclick="document.querySelector('.content').scrollIntoView({behavior:'smooth'})" aria-label="Desliza hacia abajo">
+  <button class="scroll-hint" id="scrollHint" onclick="document.getElementById('nombre-laura').scrollIntoView({behavior:'smooth', block:'center'})" aria-label="Desliza hacia abajo">
     <div class="scroll-hint-ring">
       <i class="ti ti-chevron-down" aria-hidden="true"></i>
     </div>
