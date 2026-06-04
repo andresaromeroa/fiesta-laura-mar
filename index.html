@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laura · 41 · 13 de junio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a96e;
+      --gold-dim: rgba(201,169,110,.35);
+      --bg: #0e0c0b;
+      --surface: #161310;
+      --surface2: #1a1714;
+      --border: #2e2820;
+      --text: #e8e0d5;
+      --text-muted: #7a7068;
+      --text-soft: #c8bfb0;
+      --text-dim: #4a433c;
+      --error: #c47a6a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── RETRATO ── */
+    .portrait-wrap {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .portrait-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem;
+      color: var(--border);
+    }
+
+    .portrait-placeholder i { font-size: 36px; }
+    .portrait-placeholder span {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* ── cuando tengas la imagen, reemplaza el placeholder con: ──
+       <img class="portrait-img" src="URL_IMAGEN" alt="Laura" />
+    ── */
+    .portrait-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(20%) brightness(.88) contrast(1.05);
+    }
+
+    .portrait-fade {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 200px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 0 1.5rem 2.5rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .ya-paso {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(56px, 16vw, 80px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: .5rem;
+      animation: fadeUp .9s ease both;
+    }
+
+    .subtitle-hero {
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .divider {
+      width: 40px; height: 1px;
+      background: var(--gold);
+      margin: 0 auto 2.5rem;
+      opacity: .5;
+      animation: fadeUp .9s .2s ease both;
+    }
+
+    .nombre {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(40px, 12vw, 52px);
+      font-weight: 300;
+      color: var(--text);
+      letter-spacing: 2px;
+      margin-bottom: .25rem;
+      animation: fadeUp .9s .3s ease both;
+    }
+
+    .cumple-text {
+      font-size: 13px;
+      font-weight: 200;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      animation: fadeUp .9s .35s ease both;
+    }
+
+    .numero {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(96px, 28vw, 128px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--surface2);
+      -webkit-text-stroke: 1px var(--gold-dim);
+      animation: fadeUp .9s .4s ease both;
+    }
+
+    /* ── LAYOUT ── */
+    .content {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: 0 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 2px;
+      padding: 1.75rem 1.75rem;
+    }
+
+    .card-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+
+    .detalle-row {
+      display: flex;
+      align-items: flex-start;
+      gap: .875rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .detalle-row:last-child { margin-bottom: 0; }
+
+    .detalle-icon {
+      color: var(--gold);
+      font-size: 15px;
+      margin-top: 2px;
+      min-width: 16px;
+    }
+
+    .detalle-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 2px;
+    }
+
+    .detalle-valor {
+      font-size: 13.5px;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .detalle-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 200;
+      margin-top: 2px;
+      line-height: 1.5;
+    }
+
+    /* ── CÓMO LLEGAR ── */
+    .como-llegar-inner { display: flex; flex-direction: column; gap: .9rem; }
+
+    .llegar-item { display: flex; gap: .875rem; align-items: flex-start; }
+
+    .llegar-badge {
+      min-width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--surface2);
+      border: .5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: var(--gold);
+      margin-top: 1px;
+    }
+
+    .llegar-text { font-size: 13px; font-weight: 300; color: var(--text-soft); line-height: 1.6; }
+    .llegar-text strong { color: var(--text); font-weight: 400; }
+
+    .sep { width: 100%; height: .5px; background: var(--surface2); margin: .1rem 0; }
+
+    .mapa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 1rem;
+      padding: .6rem 1rem;
+      background: var(--surface2);
+      border: .5px solid var(--border);
+      border-radius: 2px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 300;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s;
+    }
+
+    .mapa-btn:hover { background: var(--border); }
+    .mapa-btn i { font-size: 14px; }
+
+    /* ── FORMULARIO ── */
+    .form-title {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .field { margin-bottom: 1.1rem; }
+
+    .field label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      padding: 10px 13px;
+      outline: none;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder { color: var(--text-dim); }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus { border-color: var(--gold); }
+
+    .field textarea { resize: none; height: 76px; line-height: 1.6; }
+
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%237a7068' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-color: var(--surface);
+      padding-right: 32px;
+    }
+
+    .field select option { background: var(--surface); }
+
+    /* Campos condicionales (cuántos / email) */
+    .field-cuantos,
+    .field-email {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: max-height .35s ease, opacity .3s ease, transform .3s ease, margin-bottom .3s ease;
+      margin-bottom: 0;
+    }
+
+    .field-cuantos.visible,
+    .field-email.visible {
+      max-height: 90px;
+      opacity: 1;
+      transform: translateY(0);
+      margin-bottom: 1.1rem;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 200;
+      margin-top: 4px;
+    }
+
+    .error-msg {
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 4px;
+      display: none;
+    }
+
+    .btn-confirmar {
+      width: 100%;
+      background: transparent;
+      border: .5px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 14px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s, color .2s;
+      margin-top: .5rem;
+    }
+
+    .btn-confirmar:hover { background: var(--gold); color: var(--bg); }
+    .btn-confirmar:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* Éxito */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .success-msg .check {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 34px;
+      color: var(--gold);
+      margin-bottom: .75rem;
+    }
+
+    .success-msg p {
+      font-size: 13px;
+      font-weight: 300;
+      color: #a09080;
+      line-height: 1.8;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 200;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      margin-top: .5rem;
+    }
+
+    /* ── BARRA SUPERIOR ── */
+    .banner-ausente {
+      width: 100%;
+      background: var(--gold);
+      padding: .7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .6rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+
+    .banner-ausente:hover { opacity: .88; }
+
+    .banner-ausente i {
+      font-size: 15px;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .banner-ausente span {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--bg);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .banner-ausente strong {
+      font-weight: 400;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── ANIMACIONES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA SUPERIOR ── -->
+  <a class="banner-ausente" onclick="noAsistir()" href="#nota">
+    <i class="ti ti-heart" aria-hidden="true"></i>
+    <span>¿No podrás venir? <strong>Déjale un mensaje a Laura</strong></span>
+    <i class="ti ti-arrow-down" aria-hidden="true"></i>
+  </a>
+
+  <!-- ── RETRATO ── -->
+  <div class="portrait-wrap">
+    <!--
+      Cuando tengas la imagen de DALL-E, borra el .portrait-placeholder
+      y descomenta la línea de abajo:
+      <img class="portrait-img" src="URL_DE_TU_IMAGEN" alt="Laura" />
+    -->
+    <div class="portrait-placeholder">
+      <i class="ti ti-photo"></i>
+      <span>Foto de Laura aquí</span>
+    </div>
+    <div class="portrait-fade"></div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="ya-paso">Ya pasó.</div>
+    <div class="subtitle-hero">los cuarenta ya no están</div>
+    <div class="divider"></div>
+    <div class="nombre">Laura</div>
+    <div class="cumple-text">cumple</div>
+    <div class="numero">41</div>
+  </div>
+
+  <!-- ── CONTENIDO ── -->
+  <div class="content">
+
+    <!-- Detalles -->
+    <div class="card">
+      <div class="card-title">La celebración</div>
+      <div class="detalle-row">
+        <i class="ti ti-calendar-event detalle-icon" aria-hidden="true"></i>
+        <div>
+          <div class="detalle-label">Cuándo</div>
+          <div class="detalle-valor">Sábado 13 de junio de 2026</div>
+          <div class="detalle-sub">a partir de las 7:00 pm</div>
+        </div>
+      </div>
+      <div class="detalle-row">
+        <i class="ti ti-map-pin detalle-icon" aria-hidden="true"></i>
+        <div>
+          <div class="detalle-label">Dónde</div>
+          <div class="detalle-valor">Alejandro Dumas 358 – 6</div>
+          <div class="detalle-sub">Polanco, Miguel Hidalgo, CDMX</div>
+        </div>
+      </div>
+      <div class="detalle-row">
+        <i class="ti ti-bottle detalle-icon" aria-hidden="true"></i>
+        <div>
+          <div class="detalle-label">Una cosa importante</div>
+          <div class="detalle-valor">Es de traje — trae lo que quieras tomar</div>
+          <div class="detalle-sub">Nosotros ponemos todo lo demás</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cómo llegar -->
+    <div class="card">
+      <div class="card-title">Cómo llegar</div>
+      <div class="como-llegar-inner">
+        <div class="llegar-item">
+          <div class="llegar-badge"><i class="ti ti-subway" aria-hidden="true"></i></div>
+          <div class="llegar-text">
+            <strong>Metro Polanco</strong> — Línea 7 (naranja)<br>
+            Salida Av. Presidente Masaryk, camina hacia Alejandro Dumas (~10 min a pie)
+          </div>
+        </div>
+        <div class="sep"></div>
+        <div class="llegar-item">
+          <div class="llegar-badge"><i class="ti ti-car" aria-hidden="true"></i></div>
+          <div class="llegar-text">
+            <strong>En auto</strong> — el edificio no tiene estacionamiento propio.<br>
+            Hay lugar en la calle y los sábados <strong>no hay parquímetro</strong> 🎉
+          </div>
+        </div>
+        <div class="sep"></div>
+        <div class="llegar-item">
+          <div class="llegar-badge"><i class="ti ti-map-2" aria-hidden="true"></i></div>
+          <div class="llegar-text">
+            <strong>Uber / taxi</strong> — pide a Alejandro Dumas 358, Polanco
+          </div>
+        </div>
+        <a class="mapa-btn" href="https://maps.google.com/?q=Alejandro+Dumas+358,+Polanco,+CDMX" target="_blank" rel="noopener">
+          <i class="ti ti-brand-google-maps" aria-hidden="true"></i>
+          Abrir en Google Maps
+        </a>
+      </div>
+    </div>
+
+    <!-- Formulario -->
+    <div>
+      <div class="form-title">Confirma tu asistencia</div>
+
+      <div id="form-wrapper">
+        <div class="field">
+          <label for="nombre">Tu nombre</label>
+          <input type="text" id="nombre" autocomplete="name" placeholder="¿Cómo te llaman?" />
+          <div class="error-msg" id="err-nombre">Por favor escribe tu nombre</div>
+        </div>
+
+        <div class="field">
+          <label for="asistentes">¿Cuántos vienen?</label>
+          <select id="asistentes" onchange="onAsistentesChange()">
+            <option value="1">Solo yo</option>
+            <option value="2">Venimos dos</option>
+            <option value="3">Venimos tres</option>
+            <option value="4">Venimos cuatro</option>
+            <option value="mas">Somos más — ya te aviso</option>
+            <option value="no">No podré asistir</option>
+          </select>
+        </div>
+
+        <div class="field field-cuantos" id="field-cuantos">
+          <label for="cuantos-mas">¿Cuántos son aproximadamente?</label>
+          <input type="tel" inputmode="numeric" id="cuantos-mas" placeholder="ej. 6" />
+          <div class="hint">Un aproximado está bien</div>
+          <div class="error-msg" id="err-cuantos">Por favor indica el número aproximado</div>
+        </div>
+
+        <div class="field field-email visible" id="field-email">
+          <label for="email">Tu correo</label>
+          <input type="email" id="email" autocomplete="email" placeholder="para mandarte confirmación" />
+          <div class="error-msg" id="err-email">Ingresa un correo válido</div>
+        </div>
+
+        <div class="field">
+          <label for="nota" id="label-nota">Algo para Laura <span style="color:var(--text-dim);font-size:10px">(opcional)</span></label>
+          <textarea id="nota" placeholder="Un mensaje, un recuerdo, lo que quieras..."></textarea>
+        </div>
+
+        <button class="btn-confirmar" id="btn" onclick="confirmar()">
+          Confirmar asistencia
+        </button>
+      </div>
+
+      <div class="success-msg" id="success">
+        <div class="check" id="success-icon">Ya pasó ✓</div>
+        <p id="success-text">Tu confirmación quedó registrada.<br>
+        Te mandamos un correo en un momento.<br><br>
+        ¡Nos vemos el 13 de junio!</p>
+      </div>
+    </div>
+
+    <div class="footer-note">Con cariño, Andrés</div>
+  </div>
+
+  <script>
+    // ── REEMPLAZA CON TU URL DE APPS SCRIPT ──
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzy7-n76-XMlKlyaYLX-9QKd6j1uLo_EzTkipcM4gXPmJ3NbaDNcjTyLzE_MXwnxkg1/exec';
+
+    // Activa el modo "no asistir" desde la barra superior
+    function noAsistir() {
+      const sel = document.getElementById('asistentes');
+      sel.value = 'no';
+      onAsistentesChange();
+      // el scroll lo hace el href="#nota" del enlace
+    }
+
+    // Reacciona a cualquier cambio en el select de asistentes
+    function onAsistentesChange() {
+      const val = document.getElementById('asistentes').value;
+      const fieldCuantos = document.getElementById('field-cuantos');
+      const inputCuantos = document.getElementById('cuantos-mas');
+      const fieldEmail   = document.getElementById('field-email');
+      const labelNota    = document.getElementById('label-nota');
+      const btn          = document.getElementById('btn');
+
+      // Campo "cuántos más" — solo si eligió "mas"
+      if (val === 'mas') {
+        fieldCuantos.classList.add('visible');
+        setTimeout(() => inputCuantos.focus(), 350);
+      } else {
+        fieldCuantos.classList.remove('visible');
+        inputCuantos.value = '';
+        document.getElementById('err-cuantos').style.display = 'none';
+      }
+
+      // Campo email y botón — se ocultan si no asiste
+      if (val === 'no') {
+        fieldEmail.classList.remove('visible');
+        document.getElementById('email').value = '';
+        document.getElementById('err-email').style.display = 'none';
+        labelNota.innerHTML = 'Tu mensaje para Laura';
+        document.getElementById('nota').placeholder = 'Cuéntale algo, mándale un abrazo...';
+        btn.textContent = 'Enviar mensaje';
+      } else {
+        fieldEmail.classList.add('visible');
+        labelNota.innerHTML = 'Algo para Laura <span style="color:var(--text-dim);font-size:10px">(opcional)</span>';
+        document.getElementById('nota').placeholder = 'Un mensaje, un recuerdo, lo que quieras...';
+        btn.textContent = 'Confirmar asistencia';
+      }
+    }
+
+    // Inicializar: email visible por defecto
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('field-email').classList.add('visible');
+    });
+
+    function confirmar() {
+      const nombre     = document.getElementById('nombre').value.trim();
+      const email      = document.getElementById('email').value.trim();
+      const selVal     = document.getElementById('asistentes').value;
+      const cuantosMas = document.getElementById('cuantos-mas').value.trim();
+      const nota       = document.getElementById('nota').value.trim();
+      const noAsiste   = selVal === 'no';
+      let valid = true;
+
+      ['err-nombre','err-email','err-cuantos'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+
+      if (!nombre) {
+        document.getElementById('err-nombre').style.display = 'block';
+        valid = false;
+      }
+      // Email solo obligatorio si sí asiste
+      if (!noAsiste && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('err-email').style.display = 'block';
+        valid = false;
+      }
+      if (selVal === 'mas' && !cuantosMas) {
+        document.getElementById('err-cuantos').style.display = 'block';
+        valid = false;
+      }
+      if (!valid) return;
+
+      const asistentes = selVal === 'mas' ? cuantosMas : selVal;
+      const btn = document.getElementById('btn');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+
+      const params = new URLSearchParams({ nombre, email, asistentes, nota });
+      fetch(APPS_SCRIPT_URL + '?' + params.toString())
+        .then(r => r.json())
+        .then(data => {
+          if (data.status === 'ok') {
+            document.getElementById('form-wrapper').style.display = 'none';
+            const success = document.getElementById('success');
+            if (noAsiste) {
+              document.getElementById('success-icon').textContent = '♡';
+              document.getElementById('success-text').innerHTML =
+                'Tu mensaje para Laura quedó guardado.<br>Se lo haremos llegar con mucho cariño.';
+            }
+            success.style.display = 'block';
+          } else {
+            btn.disabled = false;
+            btn.textContent = noAsiste ? 'Enviar mensaje' : 'Confirmar asistencia';
+            alert('Algo salió mal, intenta de nuevo.');
+          }
+        })
+        .catch(() => {
+          btn.disabled = false;
+          btn.textContent = noAsiste ? 'Enviar mensaje' : 'Confirmar asistencia';
+          alert('Error de conexión. Intenta de nuevo.');
+        });
+    }
+  </script>
+</body>
+</html>

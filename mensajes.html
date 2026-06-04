@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mensajes para Laura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c9a96e;
+      --bg: #0e0c0b;
+      --surface: #161310;
+      --surface2: #1a1714;
+      --border: #2e2820;
+      --text: #e8e0d5;
+      --text-muted: #7a7068;
+      --text-dim: #4a433c;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PARTÍCULAS ── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0%   { opacity: 0; transform: translateY(0) scale(1); }
+      15%  { opacity: .7; }
+      85%  { opacity: .2; }
+      100% { opacity: 0; transform: translateY(-140px) scale(0.2); }
+    }
+
+    /* ── LAYOUT PRINCIPAL ── */
+    .screen {
+      position: relative;
+      width: 100vw; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      position: absolute;
+      top: 2.5rem; left: 0; right: 0;
+      text-align: center;
+    }
+
+    .header-label {
+      font-size: clamp(10px, 1.2vw, 13px);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 200;
+      margin-bottom: .4rem;
+    }
+
+    .header-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+
+    .header-line {
+      width: 40px; height: .5px;
+      background: var(--gold);
+      opacity: .4;
+      margin: .75rem auto 0;
+    }
+
+    /* ── CARD DE MENSAJE ── */
+    .msg-stage {
+      position: relative;
+      width: min(680px, 90vw);
+    }
+
+    .msg-card {
+      background: var(--surface);
+      border: .5px solid var(--border);
+      border-radius: 2px;
+      padding: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 6vw, 4rem);
+      text-align: center;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(24px) scale(.98);
+      transition: opacity .7s ease, transform .7s ease;
+      min-height: clamp(200px, 30vh, 320px);
+    }
+
+    .msg-card.entering {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .msg-card.exiting {
+      opacity: 0;
+      transform: translateY(-24px) scale(.98);
+    }
+
+    /* comilla decorativa */
+    .msg-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(60px, 8vw, 100px);
+      color: var(--gold);
+      opacity: .1;
+      position: absolute;
+      top: clamp(-.5rem, -1vw, -.75rem);
+      left: clamp(.5rem, 2vw, 1.5rem);
+      line-height: 1;
+      font-style: normal;
+      pointer-events: none;
+    }
+
+    .msg-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.8vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .msg-autor-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .msg-autor-line {
+      width: 30px; height: .5px;
+      background: var(--border);
+    }
+
+    .msg-autor {
+      font-size: clamp(10px, 1.1vw, 13px);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* barra de progreso */
+    .progress-bar {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 1px;
+      background: var(--gold);
+      opacity: .5;
+      width: 0;
+    }
+
+    /* placeholder para el stage */
+    .msg-stage-placeholder {
+      min-height: clamp(200px, 30vh, 320px);
+      width: min(680px, 90vw);
+    }
+
+    /* ── DOTS ── */
+    .dots {
+      position: absolute;
+      bottom: 2.5rem; left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .3s, transform .3s;
+    }
+
+    .dot.active {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+
+    /* ── CONTADOR ── */
+    .counter {
+      position: absolute;
+      top: 2.5rem; right: 2.5rem;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      font-weight: 200;
+    }
+
+    /* ── ESTADO VACÍO ── */
+    .empty-state {
+      text-align: center;
+      display: none;
+    }
+
+    .empty-state i {
+      font-size: 32px;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .empty-state p {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 200;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <div class="screen">
+
+    <div class="header">
+      <div class="header-label">mensajes para</div>
+      <div class="header-name">Laura</div>
+      <div class="header-line"></div>
+    </div>
+
+    <div class="counter" id="counter"></div>
+
+    <!-- Mensajes -->
+    <div class="msg-stage msg-stage-placeholder" id="msgStage"></div>
+
+    <!-- Estado vacío -->
+    <div class="empty-state" id="emptyState">
+      <i class="ti ti-messages"></i>
+      <p>Los mensajes aparecerán aquí</p>
+    </div>
+
+    <div class="dots" id="dots"></div>
+
+  </div>
+
+  <script>
+    // ── REEMPLAZA CON TU URL DE APPS SCRIPT ──
+    const APPS_SCRIPT_URL = 'TU_URL_AQUÍ';
+
+    const INTERVAL_MS   = 7000;   // segundos por mensaje
+    const REFRESH_MS    = 30000;  // cada cuánto jala mensajes nuevos
+
+    // Mensajes de demostración (se muestran si no hay conexión al script)
+    const DEMO = [
+      { nombre: 'Rodrigo & Vale',   nota: 'Laura, eres de esas personas que hacen que todo valga la pena. Feliz cumple, te queremos muchísimo.' },
+      { nombre: 'Sofía',            nota: 'Los 41 te sientan increíble. ¡A muchos años más de aventuras juntas!' },
+      { nombre: 'Carlos',           nota: 'Gracias por ser siempre tan tú. La vida es mejor contigo en ella. ¡Salud!' },
+      { nombre: 'Fam. Martínez',    nota: 'Que este año que empieza esté lleno de todo lo que mereces, que es muchísimo.' },
+      { nombre: 'Ana & Jorge',      nota: 'Cada año contigo es mejor que el anterior. ¡Por muchos 41 más!' },
+    ];
+
+    let mensajes = [];
+    let currentIdx = 0;
+    let cycleTimer = null;
+    let activeCard = null;
+
+    // ── Partículas ──
+    function buildParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top:  ${50 + Math.random() * 50}%;
+          animation-duration: ${5 + Math.random() * 7}s;
+          animation-delay:    ${Math.random() * 8}s;
+        `;
+        container.appendChild(p);
+      }
+    }
+
+    // ── Dots ──
+    function buildDots() {
+      const row = document.getElementById('dots');
+      row.innerHTML = '';
+      mensajes.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'dot' + (i === currentIdx ? ' active' : '');
+        row.appendChild(d);
+      });
+    }
+
+    function updateDots() {
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentIdx);
+      });
+    }
+
+    function updateCounter() {
+      const el = document.getElementById('counter');
+      if (mensajes.length > 1) {
+        el.textContent = `${currentIdx + 1} / ${mensajes.length}`;
+      } else {
+        el.textContent = '';
+      }
+    }
+
+    // ── Mostrar mensaje ──
+    function showCard(idx) {
+      const stage = document.getElementById('msgStage');
+      const m = mensajes[idx];
+
+      // Salida del card actual
+      if (activeCard) {
+        activeCard.classList.remove('entering');
+        activeCard.classList.add('exiting');
+        const old = activeCard;
+        setTimeout(() => old.remove(), 750);
+      }
+
+      // Nuevo card
+      const card = document.createElement('div');
+      card.className = 'msg-card';
+      card.innerHTML = `
+        <div class="msg-texto">${escapeHtml(m.nota)}</div>
+        <div class="msg-autor-wrap">
+          <div class="msg-autor-line"></div>
+          <div class="msg-autor">${escapeHtml(m.nombre)}</div>
+          <div class="msg-autor-line"></div>
+        </div>
+        <div class="progress-bar" id="pb-${idx}"></div>
+      `;
+      stage.appendChild(card);
+      activeCard = card;
+
+      // Ajusta altura del stage al card
+      stage.style.height = card.offsetHeight + 'px';
+      if (stage.style.height === '0px') stage.style.height = '';
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          card.classList.add('entering');
+          // Barra de progreso
+          const pb = card.querySelector('.progress-bar');
+          if (pb) {
+            pb.style.transition = `width ${INTERVAL_MS}ms linear`;
+            requestAnimationFrame(() => { pb.style.width = '100%'; });
+          }
+        });
+      });
+
+      updateDots();
+      updateCounter();
+    }
+
+    function next() {
+      currentIdx = (currentIdx + 1) % mensajes.length;
+      showCard(currentIdx);
+    }
+
+    function startCycle() {
+      clearInterval(cycleTimer);
+      if (mensajes.length > 1) {
+        cycleTimer = setInterval(next, INTERVAL_MS);
+      }
+    }
+
+    // ── Escape HTML ──
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Fetch mensajes ──
+    async function fetchMensajes() {
+      try {
+        const r = await fetch(APPS_SCRIPT_URL + '?action=getMensajes');
+        const data = await r.json();
+        const nuevos = (data.mensajes || []).filter(m => m.nota && m.nota.trim());
+        if (nuevos.length > 0) return nuevos;
+      } catch (e) { /* usa demo */ }
+      return DEMO;
+    }
+
+    async function init() {
+      buildParticles();
+      mensajes = await fetchMensajes();
+
+      if (mensajes.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+
+      buildDots();
+      currentIdx = 0;
+      showCard(0);
+      startCycle();
+
+      // Refresca mensajes nuevos cada 30s sin interrumpir el ciclo
+      setInterval(async () => {
+        const nuevos = await fetchMensajes();
+        if (nuevos.length > mensajes.length) {
+          mensajes = nuevos;
+          buildDots();
+        }
+      }, REFRESH_MS);
+    }
+
+    init();
+  </script>
+</body>
+</html>
